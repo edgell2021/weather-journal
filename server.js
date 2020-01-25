@@ -28,3 +28,28 @@ function listening() {
   console.log("server started");
   console.log(`server number: ${port}`);
 }
+
+//GET route server side
+app.get("/all", function(req, res) {
+  res.send(projectData);
+});
+
+// POST Info
+app.post("/add", function(req, res) {
+  res.send("POST received");
+});
+
+// const data = [];
+
+app.post("/weather", addData);
+
+function addData(req, res) {
+  let newData = req.body;
+  newEntry = {
+    date: newData.date,
+    feels: newData.feels,
+    temp: newData.temp
+  };
+  projectData.push(newEntry);
+  console.log(projectData);
+}
