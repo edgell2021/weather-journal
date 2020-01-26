@@ -29,27 +29,31 @@ function listening() {
   console.log(`server number: ${port}`);
 }
 
-//GET route server side
-app.get("/all", function(req, res) {
+//GET route
+app.get("/", function(req, res) {
   res.send(projectData);
 });
 
-// POST Info
-app.post("/add", function(req, res) {
-  res.send("POST received");
-});
-
-// const data = [];
+// POST route
+data = [];
 
 app.post("/weather", addData);
 
 function addData(req, res) {
   let newData = req.body;
+  console.log(newData);
   newEntry = {
     date: newData.date,
-    feels: newData.feels,
-    temp: newData.temp
+    temp: newData.temp,
+    feels: newData.feels
   };
-  projectData.push(newEntry);
-  console.log(projectData);
+  data.push(newEntry);
+  res.send(data);
+  console.log(data);
 }
+
+//GET request
+app.get("/all", function(req, res) {
+  res.send(data);
+  console.log(data);
+});

@@ -12,17 +12,15 @@ document.getElementById("generate").addEventListener("click", performAction);
 function performAction(e) {
   const newZip = document.getElementById("zip").value;
   const feels = document.getElementById("feelings").value;
-  getWeatherInfo(baseURL, newZip, units, apiKey);
-  console.log(newDate);
-  console.log(feels);
+  getWeatherInfo(baseURL, newZip, units, apiKey, feels).then(function(data) {
+    postData("/weather", { date: newDate, feels: feels, temp: data.main.temp });
+  });
 }
 
 const getWeatherInfo = async (baseURL, zip, units, key) => {
   const res = await fetch(baseURL + zip + units + key);
   try {
     const data = await res.json();
-    console.log(data);
-    console.log(data.main.temp);
     return data;
   } catch (error) {
     console.log("error", error);
@@ -31,7 +29,7 @@ const getWeatherInfo = async (baseURL, zip, units, key) => {
 };
 
 //Client side Async POST
-const postData = async (url = "http://localhost:3000", data = {}) => {
+const postData = async (url = "", data = {}) => {
   console.log(data);
   const response = await fetch(url, {
     method: "POST",
