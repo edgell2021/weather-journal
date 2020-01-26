@@ -13,7 +13,11 @@ function performAction(e) {
   const newZip = document.getElementById("zip").value;
   const feels = document.getElementById("feelings").value;
   getWeatherInfo(baseURL, newZip, units, apiKey, feels).then(function(data) {
-    postData("/weather", { date: newDate, feels: feels, temp: data.main.temp });
+    postData("/weather", {
+      date: newDate,
+      feels: feels,
+      temp: data.main.temp
+    }).then(updateUI());
   });
 }
 
@@ -25,6 +29,18 @@ const getWeatherInfo = async (baseURL, zip, units, key) => {
   } catch (error) {
     console.log("error", error);
     // appropriately handle the error
+  }
+};
+
+const updateUI = async () => {
+  const request = await fetch("/all");
+  try {
+    const allData = await request.json();
+    document.getElementById("date").innerHTML = allData[0].date;
+    document.getElementById("temp").innerHTML = allData[0].temp;
+    document.getElementById("content").innerHTML = allData[0].feels;
+  } catch (error) {
+    console.log("error", error);
   }
 };
 
