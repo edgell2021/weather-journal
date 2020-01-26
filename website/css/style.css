@@ -19,6 +19,14 @@ body {
 .holder {
 }
 
+.hide {
+  display: none;
+}
+
+.show {
+  dispplay: block;
+}
+
 .entry {
   background: rgba(59, 74, 107, 0.4);
 }

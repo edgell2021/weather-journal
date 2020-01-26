@@ -36,9 +36,14 @@ const updateUI = async () => {
   const request = await fetch("/all");
   try {
     const allData = await request.json();
-    document.getElementById("date").innerHTML = allData[0].date;
-    document.getElementById("temp").innerHTML = allData[0].temp;
-    document.getElementById("content").innerHTML = allData[0].feels;
+    const headers = document.getElementsByClassName("header");
+    let key = allData.length - 1;
+    for (let header of headers) {
+      header.classList.remove("hide");
+    }
+    document.getElementById("date").innerHTML = allData[key].date;
+    document.getElementById("temp").innerHTML = allData[key].temp + "&#8457;";
+    document.getElementById("content").innerHTML = allData[key].feels;
   } catch (error) {
     console.log("error", error);
   }
